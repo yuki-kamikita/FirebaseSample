@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "386582330431",
+    "firebase_url": "https://sampleproject-yuki.firebaseio.com",
+    "project_id": "sampleproject-yuki",
+    "storage_bucket": "sampleproject-yuki.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:386582330431:android:38356edaab992ce958cc8a",
+        "android_client_info": {
+          "package_name": "com.example.firebasesample"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "386582330431-2lebci7olcbvuuu89vseru7b9iblor7a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxAdzqLd8bqMYYOKaMVZvWIiz_ZpZlbZI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "386582330431-2lebci7olcbvuuu89vseru7b9iblor7a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
