@@ -3,6 +3,7 @@ package com.example.firebasesample
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import com.google.android.gms.tasks.OnCompleteListener
@@ -27,20 +28,6 @@ class MainActivity : AppCompatActivity() {
         auth = Firebase.auth
         functions = Firebase.functions
 
-        val text = findViewById<TextView>(R.id.hello_world)
-        getCloudFunction()
-            .addOnCompleteListener(OnCompleteListener { task ->
-                // 失敗
-                if (!task.isSuccessful) {
-                    Log.w(TAG, "addMessage:onFailure", task.exception)
-                    text.text = "error"
-                    return@OnCompleteListener
-                }
-
-                // 成功
-                val result = task.result
-                text.text = result
-            })
     }
 
     public override fun onStart() {
@@ -50,6 +37,78 @@ class MainActivity : AppCompatActivity() {
         // ログイン情報のチェック
         val currentUser = auth.currentUser
         updateUI(currentUser)
+
+        val text = findViewById<TextView>(R.id.hello_world)
+        val button = findViewById<Button>(R.id.setCustomClaim)
+        button.setOnClickListener {
+            text.text = "cloud functions リクエスト中"
+
+            // cloud functions を呼び出して内容をテキストに表示
+            getCloudFunction("setCustomClaim")
+                .addOnCompleteListener(OnCompleteListener { task ->
+                    // 失敗
+                    if (!task.isSuccessful) {
+                        Log.w(TAG, "addMessage:onFailure", task.exception)
+                        text.text = "error"
+                        return@OnCompleteListener
+                    }
+
+                    // 成功
+                    val result = task.result.toString()
+                    text.text = result
+                })
+
+            // 認証情報の更新
+            currentUser?.getIdToken(true)
+        }
+
+
+        val buttonHelloWorld = findViewById<Button>(R.id.buttonHelloWorld)
+        buttonHelloWorld.setOnClickListener {
+            text.text = "cloud functions リクエスト中"
+
+            // cloud functions を呼び出して内容をテキストに表示
+            getCloudFunction("helloWorld")
+                .addOnCompleteListener(OnCompleteListener { task ->
+                    // 失敗
+                    if (!task.isSuccessful) {
+                        Log.w(TAG, "addMessage:onFailure", task.exception)
+                        text.text = "error"
+                        return@OnCompleteListener
+                    }
+
+                    // 成功
+                    val result = task.result
+                    text.text = result
+                })
+        }
+
+        val getCustomClaim = findViewById<Button>(R.id.getCustomClaim)
+        getCustomClaim.setOnClickListener {
+            text.text = "cloud functions リクエスト中"
+            // cloud functions を呼び出して内容をテキストに表示
+            getCloudFunction("getCustomClaim")
+                .addOnCompleteListener(OnCompleteListener { task ->
+                    // 失敗
+                    if (!task.isSuccessful) {
+                        Log.w(TAG, "addMessage:onFailure", task.exception)
+                        text.text = "error"
+                        return@OnCompleteListener
+                    }
+
+                    // 成功
+                    val result = task.result.toString()
+                    text.text = result
+                })
+
+            // 認証情報の更新
+            currentUser?.getIdToken(true)?.addOnSuccessListener {
+                // 自分のclaims["admin"]をトースト表示してみる
+                Toast.makeText(baseContext, "Authから取得したCustomClaim ownerId:${it.claims["ownerId"].toString()}",
+                    Toast.LENGTH_SHORT).show()
+            }
+        }
+
     }
 
     // 匿名ログイン
@@ -75,13 +134,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     // cloud functions サンプル関数を呼び出し
-    private fun getCloudFunction(): Task<String> {
-//        val data = hashMapOf(
-//            "test" to "testData"
-//        )
-        return functions.getHttpsCallable("helloWorld")
-//            .call(data)
-            .call()
+    private fun getCloudFunction(name: String): Task<String> {
+        val data = hashMapOf(
+            "ownerId" to "testData"
+        )
+        return functions.getHttpsCallable(name)
+            .call(data)
+//            .call()
             .continueWith { task ->
                 val result = task.result?.data as String // json形式で受け取った keyがresultのdataをStringに変換してる？？？
                 result

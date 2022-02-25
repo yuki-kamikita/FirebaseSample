@@ -16,4 +16,34 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/setCustomClaim"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="setCustomClaim"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hello_world" />
+
+    <Button
+        android:id="@+id/buttonHelloWorld"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="HelloWorld"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setCustomClaim" />
+
+    <Button
+        android:id="@+id/getCustomClaim"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="getCustomClaim"
+        app:layout_constraintBottom_toTopOf="@+id/setCustomClaim"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hello_world" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
